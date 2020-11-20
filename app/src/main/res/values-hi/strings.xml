@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MovieLore</string>
+    <string name="movies" >फ़िल्म</string>
+    <string name="favorite" >पसंदीदा</string>
+    <string name="add_to_favorite" >पसंदीदा लिस्ट मे डालें</string>
+    <string name="change_language">भाषा बदलो</string>
+    <string name="language">हिन्दी भाषा</string>
+</resources>

@@ -1,3 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MovieLore</string>
+    <string name="movies" tools:ignore="MissingTranslation">Movies</string>
+    <string name="favorite" tools:ignore="MissingTranslation">Favorite</string>
+    <string name="add_to_favorite" tools:ignore="MissingTranslation" >Add to Favorite</string>
+    <string name="change_language" tools:ignore="MissingTranslation" >Change Language</string>
+    <string name="language" tools:ignore="MissingTranslation">English</string>
 </resources>

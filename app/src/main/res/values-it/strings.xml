@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MovieLore</string>
+    <string name="movies" >Film</string>
+    <string name="favorite" >Preferito</string>
+    <string name="add_to_favorite" >Aggiungi ai favoriti</string>
+    <string name="change_language">Cambia lingua</string>
+    <string name="language">Italiano</string>
+</resources>

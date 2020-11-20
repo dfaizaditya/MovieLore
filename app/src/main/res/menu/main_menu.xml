@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_action"
+        app:showAsAction="ifRoom"
+        android:title="@string/language">
+    </item>
+    <item
+        android:title="English"
+        app:showAsAction="never"
+        android:id="@+id/settings_action1"></item>
+    <item android:title="Indonesia"
+        app:showAsAction="never"
+        android:id="@+id/settings_action2"></item>
+    <item android:title="Italiano"
+        app:showAsAction="never"
+        android:id="@+id/settings_action3"></item>
+    <item android:title="Hindi"
+        app:showAsAction="never"
+        android:id="@+id/settings_action4"></item>
+</menu>
