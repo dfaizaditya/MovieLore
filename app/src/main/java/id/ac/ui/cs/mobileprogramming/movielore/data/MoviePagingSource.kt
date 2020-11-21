@@ -15,14 +15,14 @@ class MoviePagingSource (
 
 
         return try {
-            val position = params.key ?: STARTING_PAGE_INDEX
-            val response = movieApi.getNowPlayingMovies(position)
+            val pos = params.key ?: STARTING_PAGE_INDEX
+            val response = movieApi.getNowPlayingMovies(pos)
             val movies = response.results
 
             LoadResult.Page(
                 data = movies,
-                prevKey = if (position == STARTING_PAGE_INDEX) null else position-1,
-                nextKey = if (movies.isEmpty()) null else position+1
+                prevKey = if (pos == STARTING_PAGE_INDEX) null else pos-1,
+                nextKey = if (movies.isEmpty()) null else pos+1
             )
         } catch (e: IOException){
             LoadResult.Error(e)

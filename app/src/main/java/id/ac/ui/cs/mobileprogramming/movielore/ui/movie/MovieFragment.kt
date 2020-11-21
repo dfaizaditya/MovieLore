@@ -10,10 +10,12 @@ import id.ac.ui.cs.mobileprogramming.movielore.R
 import id.ac.ui.cs.mobileprogramming.movielore.databinding.FragmentMovieBinding
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.paging.LoadState
+import androidx.navigation.fragment.findNavController
+import id.ac.ui.cs.mobileprogramming.movielore.data.model.Movie
 
 
 @AndroidEntryPoint
-class MovieFragment : Fragment(R.layout.fragment_movie){
+class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClickListener{
 
     private val viewModel by viewModels<MovieViewModel>()
     private var _binding : FragmentMovieBinding? = null
@@ -24,7 +26,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie){
 
         _binding = FragmentMovieBinding.bind(view)
 
-        val adapter = MovieAdapter()
+        val adapter = MovieAdapter(this)
 
         binding.apply {
             rvMovie.setHasFixedSize(true)
@@ -59,5 +61,14 @@ class MovieFragment : Fragment(R.layout.fragment_movie){
                 }
             }
         }
+
+        setHasOptionsMenu(true)
     }
+
+    override fun onItemClick(movie: Movie) {
+        val action = MovieFragmentDirections.actionNavMovieToNavDetails(movie)
+        findNavController().navigate(action)
+    }
+
+
 }

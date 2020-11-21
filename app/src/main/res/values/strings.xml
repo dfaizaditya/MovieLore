@@ -9,4 +9,5 @@
     <string name="setting_clicked" tools:ignore="MissingTranslation">Setting clicked</string>
     <string name="failed_to_load" tools:ignore="MissingTranslation">Failed to load</string>
     <string name="try_again" tools:ignore="MissingTranslation">Try again</string>
+    <string name="detail">Detail</string>
 </resources>

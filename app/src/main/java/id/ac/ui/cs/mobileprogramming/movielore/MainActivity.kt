@@ -1,11 +1,12 @@
 package id.ac.ui.cs.mobileprogramming.movielore
 
-import android.app.Activity
+import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -14,21 +15,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import id.ac.ui.cs.mobileprogramming.movielore.databinding.ActivityMainBinding
-import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
-import android.content.res.Configuration
-import android.content.Context
-import android.content.Intent
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import id.ac.ui.cs.mobileprogramming.movielore.databinding.ActivityMainBinding
 import id.ac.ui.cs.mobileprogramming.movielore.reciever.NetworkStateReceiver
-
+import kotlinx.android.synthetic.main.download_activity.*
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NetworkStateReceiver.NetworkStateReceiverListener {
     private lateinit var menuController: NavController
     private var networkStateReceiver: NetworkStateReceiver? = null
     private var snackbar: Snackbar? = null
+    private lateinit var navController: NavController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,6 +110,20 @@ class MainActivity : AppCompatActivity(), NetworkStateReceiver.NetworkStateRecei
         snackbar!!.show()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+
+    fun startDownload(view: View){
+        var a = downloadTask(this@MainActivity,btnDownload,progress_horizontal,txtState)
+        a.execute()
+        Toast.makeText(this, R.string.setting_clicked,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
 
 
 }
