@@ -6,4 +6,8 @@
     <string name="add_to_favorite" >Aggiungi ai favoriti</string>
     <string name="change_language">Cambia lingua</string>
     <string name="language">Italiano</string>
+    <string name="no_internet_connection">Nessuna connessione internet</string>
+    <string name="setting_clicked">Impostazione cliccata</string>
+    <string name="failed_to_load">Caricamento non riuscito</string>
+    <string name="try_again">Riprova</string>
 </resources>

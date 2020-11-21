@@ -1,6 +1,8 @@
 package id.ac.ui.cs.mobileprogramming.movielore
 
 import android.app.Activity
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -18,17 +20,24 @@ import java.util.*
 import android.content.res.Configuration
 import android.content.Context
 import android.content.Intent
+import com.google.android.material.snackbar.Snackbar
+import id.ac.ui.cs.mobileprogramming.movielore.reciever.NetworkStateReceiver
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NetworkStateReceiver.NetworkStateReceiverListener {
     private lateinit var menuController: NavController
+    private var networkStateReceiver: NetworkStateReceiver? = null
+    private var snackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        snackbar = Snackbar.make(findViewById(R.id.main_activity), R.string.no_internet_connection, Snackbar.LENGTH_INDEFINITE)
+        setNetworkStateReceiver()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         menuController = navHostFragment.findNavController()
@@ -51,22 +60,22 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId;
         if (id == R.id.add_action){
-            Toast.makeText(this, "item Add Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
             return true
         }else if (id == R.id.settings_action1){
-            Toast.makeText(this,"Seeting clicked",Toast.LENGTH_SHORT).show()
             setLocale("en")
+            Toast.makeText(this, R.string.setting_clicked,Toast.LENGTH_SHORT).show()
         }else if (id == R.id.settings_action2){
-            Toast.makeText(this,"Seeting clicked",Toast.LENGTH_SHORT).show()
             setLocale("id")
+            Toast.makeText(this, R.string.setting_clicked,Toast.LENGTH_SHORT).show()
         }
         else if (id == R.id.settings_action3){
-            Toast.makeText(this,"Seeting clicked",Toast.LENGTH_SHORT).show()
             setLocale("it")
+            Toast.makeText(this, R.string.setting_clicked,Toast.LENGTH_SHORT).show()
         }
         else if (id == R.id.settings_action4){
-            Toast.makeText(this,"Seeting clicked",Toast.LENGTH_SHORT).show()
             setLocale("hi")
+            Toast.makeText(this, R.string.setting_clicked,Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -80,4 +89,27 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
+
+
+    //function that sets the network state receiver to the activity
+    private fun setNetworkStateReceiver(){
+        networkStateReceiver = NetworkStateReceiver(this)
+        networkStateReceiver!!.addListener(this)
+        applicationContext.registerReceiver(networkStateReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
+
+    //function invoked when connected to the Internet
+    override fun onNetworkAvailable() {
+        snackbar!!.dismiss()
+
+    }
+
+    //funtion invoked when disconnected from the Internet
+    override fun onNetworkUnavailable() {
+        snackbar!!.show()
+    }
+
+
+
 }

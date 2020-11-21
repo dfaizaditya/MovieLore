@@ -5,4 +5,8 @@
     <string name="add_to_favorite" >पसंदीदा लिस्ट मे डालें</string>
     <string name="change_language">भाषा बदलो</string>
     <string name="language">हिन्दी भाषा</string>
+    <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
+    <string name="setting_clicked">पर क्लिक किया गया</string>
+    <string name="failed_to_load">लोड करने में विफल</string>
+    <string name="try_again">ुन: प्रयास करें</string>
 </resources>

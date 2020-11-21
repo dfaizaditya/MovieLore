@@ -6,4 +6,8 @@
     <string name="add_to_favorite" >Tambah ke Favorit</string>
     <string name="change_language">ubah bahasa</string>
     <string name="language">Bahasa</string>
+    <string name="no_internet_connection">Tidak ada koneksi internet</string>
+    <string name="setting_clicked">Setting di klik</string>
+    <string name="failed_to_load">Gagal memuat</string>
+    <string name="try_again">Coba lagi</string>
 </resources>

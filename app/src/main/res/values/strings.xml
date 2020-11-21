@@ -5,4 +5,8 @@
     <string name="add_to_favorite" tools:ignore="MissingTranslation" >Add to Favorite</string>
     <string name="change_language" tools:ignore="MissingTranslation" >Change Language</string>
     <string name="language" tools:ignore="MissingTranslation">English</string>
+    <string name="no_internet_connection"> No internet connection</string>
+    <string name="setting_clicked" tools:ignore="MissingTranslation">Setting clicked</string>
+    <string name="failed_to_load" tools:ignore="MissingTranslation">Failed to load</string>
+    <string name="try_again" tools:ignore="MissingTranslation">Try again</string>
 </resources>

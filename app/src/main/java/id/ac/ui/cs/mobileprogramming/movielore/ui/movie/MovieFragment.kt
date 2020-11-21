@@ -29,8 +29,8 @@ class MovieFragment : Fragment(R.layout.fragment_movie){
         binding.apply {
             rvMovie.setHasFixedSize(true)
             rvMovie.adapter = adapter.withLoadStateHeaderAndFooter(
-                header = MovieLoadStateAdapter {adapter.retry()},
-                footer = MovieLoadStateAdapter {adapter.retry()}
+                    header = MovieLoadStateAdapter {adapter.retry()},
+                    footer = MovieLoadStateAdapter {adapter.retry()}
             )
             btnTryAgain.setOnClickListener {
                 adapter.retry()
@@ -50,8 +50,8 @@ class MovieFragment : Fragment(R.layout.fragment_movie){
 
                 //not found
                 if (loadState.source.refresh is LoadState.NotLoading &&
-                    loadState.append.endOfPaginationReached &&
-                    adapter.itemCount < 1){
+                        loadState.append.endOfPaginationReached &&
+                        adapter.itemCount < 1){
                     rvMovie.isVisible = false
                     tvNotFound.isVisible = true
                 } else {
