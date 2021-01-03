@@ -1,14 +1,20 @@
 package id.ac.ui.cs.mobileprogramming.movielore
 
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -18,9 +24,14 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import id.ac.ui.cs.mobileprogramming.movielore.databinding.ActivityMainBinding
+import id.ac.ui.cs.mobileprogramming.movielore.manager.DownloadManager
 import id.ac.ui.cs.mobileprogramming.movielore.reciever.NetworkStateReceiver
 import kotlinx.android.synthetic.main.download_activity.*
+import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
+
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NetworkStateReceiver.NetworkStateReceiverListener {
@@ -28,7 +39,8 @@ class MainActivity : AppCompatActivity(), NetworkStateReceiver.NetworkStateRecei
     private var networkStateReceiver: NetworkStateReceiver? = null
     private var snackbar: Snackbar? = null
     private lateinit var navController: NavController
-
+    private val PERMISSION_REQUEST_CODE = 1234
+    var REQUEST_CODE_WRITE_STORAGE_PERMISION = 105
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +62,11 @@ class MainActivity : AppCompatActivity(), NetworkStateReceiver.NetworkStateRecei
             navBottom.setupWithNavController(menuController)
         }
 
+
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -114,16 +131,90 @@ class MainActivity : AppCompatActivity(), NetworkStateReceiver.NetworkStateRecei
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-
     fun startDownload(view: View){
-        var a = downloadTask(this@MainActivity,btnDownload,progress_horizontal,txtState)
-        a.execute()
-        Toast.makeText(this, R.string.setting_clicked,Toast.LENGTH_SHORT).show()
+        checkStoragePermissions()
+//
+//        var a = downloadTask(this@MainActivity,btnDownload,progress_horizontal,txtState)
+//        a.execute()
+//        Toast.makeText(this, R.string.setting_clicked,Toast.LENGTH_SHORT).show()
     }
 
     override fun onBackPressed() {
         moveTaskToBack(true)
     }
 
+    public fun checkStoragePermissions() {
+        var activity = this
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    ActivityCompat.requestPermissions(activity,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        REQUEST_CODE_WRITE_STORAGE_PERMISION)
+                } else {
+                    ActivityCompat.requestPermissions(activity,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        REQUEST_CODE_WRITE_STORAGE_PERMISION)
+
+                }
+            }
+
+        } else {
+
+            if (ContextCompat.checkSelfPermission(activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(activity,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    } else {
+                        ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CODE_WRITE_STORAGE_PERMISION)
+                    }
+                }
+            } else {
+                Toast.makeText(this,"BBBB",Toast.LENGTH_SHORT).show();
+                val folder = File(Environment.getExternalStorageDirectory().toString() + "/" + "HelloWorld")
+                if (!folder.exists()) {
+                    folder.mkdirs()
+                }
+                val fileName = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Date()) + ".mp3"
+                val urlOfTheFile = "https://sample-videos.com/audio/mp3/wave.mp3"
+                DownloadManager.initDownload(this, urlOfTheFile, folder.absolutePath, fileName)
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_CODE_WRITE_STORAGE_PERMISION -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    val folder = File(Environment.getExternalStorageDirectory().toString() + "/" + "HelloWorld")
+                    if (!folder.exists()) {
+                        folder.mkdirs()
+                    }
+                    val fileName = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Date()) + ".mp3"
+                    val urlOfTheFile = "https://sample-videos.com/audio/mp3/wave.mp3"
+                    DownloadManager.initDownload(this, urlOfTheFile, folder.absolutePath, fileName)
+                }
+                else{
+                    val intent = Intent(this, PopUpWindow::class.java)
+                    intent.putExtra("popuptitle", "Warning")
+                    intent.putExtra("popuptext", "We need your permission to access local storage" +
+                            "To proceed download task " +
+                            "Please allow local storage permission")
+                    intent.putExtra("popupbtn", "OK")
+                    intent.putExtra("darkstatusbar", false)
+                    startActivity(intent)
+                }
+            }
+
+        }
+    }
 
 }

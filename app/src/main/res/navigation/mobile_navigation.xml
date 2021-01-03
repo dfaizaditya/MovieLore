@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_movie_to_nav_details"
             app:destination="@id/nav_details" />
+        <action
+            android:id="@+id/action_nav_movie_to_nav_download"
+            app:destination="@id/nav_download" />
     </fragment>
     <fragment
         android:id="@+id/nav_favorite"
@@ -22,6 +25,18 @@
         <action
             android:id="@+id/action_nav_favorite_to_nav_details"
             app:destination="@id/nav_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_download"
+        android:name="id.ac.ui.cs.mobileprogramming.movielore.download_fragment"
+        android:label="@string/download"
+        tools:layout="@layout/download_task">
+    </fragment>
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="id.ac.ui.cs.mobileprogramming.movielore.download_fragment"
+        android:label="About"
+        tools:layout="@layout/download_task">
     </fragment>
     <fragment
         android:id="@+id/nav_details"
