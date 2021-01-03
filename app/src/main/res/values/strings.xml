@@ -11,4 +11,6 @@
     <string name="try_again" tools:ignore="MissingTranslation">Try again</string>
     <string name="detail">Detail</string>
     <string name="download" tools:ignore="MissingTranslation">Download</string>
+    <string name="add_name" tools:ignore="MissingTranslation">Add Name</string>
+    <string name="opengl" tools:ignore="MissingTranslation">OpenGL</string>
 </resources>

@@ -29,6 +29,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".aboutActivity" >
+            <!--Default Intent Filter-->
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <service android:name=".service.DownloadService"/>
     </application>
 
